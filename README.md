@@ -9,18 +9,18 @@ also configurable and context aware to fit the particular communications scenari
 
 For example, assume a friend  tweets the following:
 
-   * "I hate public bathrooms! why is the door so short?"
+   * "And I'm stuck in another long line at the gas station!"
 
 ProVoice would be able to give you context-sensitive responses based on your mood, time of day, 
 your relationship to the sender, etc.
 
 So, if this is your mother, ProVoice might suggest the following response:
 
-   * "LOL reminds me of some great potty training moment :)"
+   * "Maybe you should break down and get the Tesla!  you deserve it :)"
 
 If it was your college roommate, and you're set to "playful mood" it might suggest:
 
-   * "WHOA, how many times avae you sent that exact same tweet?  Are you tweeting us from while doing the deed?"
+   * "Are you there for another 6 pack or for fuel?"
 
 
 ## Components
