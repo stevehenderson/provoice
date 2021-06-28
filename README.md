@@ -1,5 +1,7 @@
 # ProVoice
 
+
+
 ## Overview 
 
 ProVoice is an intelligent chat assistant designed to give you that 
@@ -32,6 +34,89 @@ it input, it cranks the repsponse, and returns it to you as a json object.  It's
     format and render.
     
   * A Test web-based UI where you can test the API 
+
+## Installation & Running
+
+### API
+
+#### Install (one time)  [Linux/MAc] 
+
+Create a python virtual environment.
+
+In the project root folder:
+
+```
+python3 -m venv ve-provoice
+```
+
+Activate the virtual environment
+
+```
+source ve-provoice/bin/activate
+```
+
+Install requirements
+
+```
+pip install -r requirements
+```
+
+Deactivate virtual environment
+
+```
+deactivate
+```
+
+#### Running the API
+
+Activate the virtual environment
+
+```
+source ve-provoice/bin/activate
+```
+
+Start the API:
+
+```python
+python provoice-api.py
+```
+
+Then visit the API, specifying the input `string` and the `model`:
+
+Examples:
+
+```python
+http://localhost:5000/get_provoice_response?input=New%20york&model=test_provoice
+```
+
+Returns:
+
+```json
+{
+  "model": {
+    "description": "A test model for ProVoice to test API integration.", 
+    "id": "test_provoice"
+  }, 
+  "response": "I AM A TEST MODEL AND THIS IS MY ONLY RESPONSE :)"
+}
+```
+
+
+```html
+http://localhost:5000/get_provoice_response?input=New%20york&model=basic_provoice
+```
+
+Yeilds:
+
+```json
+{
+"model": {
+"description": "A simple Provoice model with simple responses.",
+"id": "basic_provoice"
+},
+"response": "Oh I love New York!"
+}
+```
 
 ## Roadmap
 
