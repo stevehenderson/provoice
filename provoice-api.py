@@ -9,6 +9,7 @@ from models.TestProvoice import TestProvoice
 application = Flask(__name__)
 CORS(application, resources={r"/*": {"origins": "*"}})
 
+#  Add models, contained in classes, here...
 testProvoiceModel = TestProvoice()
 basicProvoiceModel = BasicProvoice()
 
@@ -19,7 +20,8 @@ application = Flask(__name__)
 #############################
 
 #
-#  Given an input, returns a provoice response
+#  Given an input, returns a provoice response.
+#  If no model is specified, the BasicProvoice model is invoked.
 #
 @application.route('/get_provoice_response', methods=['GET', 'OPTIONS'])
 def get_provoice():
@@ -31,16 +33,15 @@ def get_provoice():
         result = {}
         result['response'] = "ERROR.  You didn't send an input"
         return result
-
+    # Check the input parameter for the selected model
     if model == "basic_provoice":
         return basicProvoiceModel.get_provoice_response(input)
     if model == "test_provoice":
         return testProvoiceModel.get_provoice_response(input)
     else:
         result = {}
-        result['response'] = "ERROR.  Your model {} didn't is not implemented".format(model)
+        result['response'] = "ERROR.  Your desired model {} is not implemented".format(model)
         return result
-
 
 #
 #  Given an input, returns a provoice response
