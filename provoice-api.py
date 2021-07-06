@@ -28,20 +28,19 @@ def get_provoice():
     input = request.args.get('input', default = None, type = str)
     model = request.args.get('model', default = 'basic_provoice', type = str)
     sentiment = request.args.get('sentiment', default = None, type = str)
-
+    result = {}
     if input is None:
-        result = {}
         result['response'] = "ERROR.  You didn't send an input"
         return result
     # Check the input parameter for the selected model
     if model == "basic_provoice":
-        return basicProvoiceModel.get_provoice_response(input)
-    if model == "test_provoice":
-        return testProvoiceModel.get_provoice_response(input)
+        result = basicProvoiceModel.get_provoice_response(input)
+    elif model == "test_provoice":
+        result = testProvoiceModel.get_provoice_response(input)
     else:
-        result = {}
         result['response'] = "ERROR.  Your desired model {} is not implemented".format(model)
-        return result
+    result['input'] = input
+    return result
 
 #
 #  Given an input, returns a provoice response
@@ -49,6 +48,13 @@ def get_provoice():
 @application.route('/', methods=['GET', 'OPTIONS'])
 def home():
     return "<h1>Welcome to the Provoice API</h1>"
+
+#
+#  Given an input, returns a provoice response
+#
+@application.route('/oregon', methods=['GET', 'OPTIONS'])
+def oregon():
+    return "<h2>Welcome to the Oregon</h2>"
 
 # run the app.
 if __name__ == "__main__":
