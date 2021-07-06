@@ -2,7 +2,6 @@
 
   A very basic model for ProVoice.  Uses a series of if-then rules and heuristics
   to work through a set of responses.
-
 '''
 import json
 
