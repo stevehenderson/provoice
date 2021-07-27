@@ -14,7 +14,7 @@ testProvoiceModel = TestProvoice()
 basicProvoiceModel = BasicProvoice()
 
 application = Flask(__name__)
-
+ 
 #############################
 # WEB API METHODS
 #############################
