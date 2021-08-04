@@ -76,10 +76,16 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 ve-provoice/
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 00183e2c38e972d680ea3243ec30297ba9f01625
 venv/__pycache__
 __pycache__
 venv
 
 .DS_Store
+<<<<<<< HEAD
+>>>>>>> 00183e2c38e972d680ea3243ec30297ba9f01625
+=======
 >>>>>>> 00183e2c38e972d680ea3243ec30297ba9f01625
