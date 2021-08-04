@@ -75,3 +75,11 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 ve-provoice/
+<<<<<<< HEAD
+=======
+venv/__pycache__
+__pycache__
+venv
+
+.DS_Store
+>>>>>>> 00183e2c38e972d680ea3243ec30297ba9f01625
