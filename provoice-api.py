@@ -1,18 +1,14 @@
 # Sample API
 # API to get a provoice response
 
-from flask import Flask, request
-from datetime import timedelta
+from flask import Flask, request, render_template
 from flask_cors import CORS
-from pprint import pprint
-import time
-import datetime
-from dateutil import parser as dateparser
 import json
-import random
-from flask_cors import CORS
 from models.BasicProvoice import BasicProvoice
+from models.BasicKeywordLookupProvoice import BasicKeywordLookupProvoice
 from models.TestProvoice import TestProvoice
+from models.OregonDudeProvoice import OregonDudeProvoice
+
 
 application = Flask(__name__)
 CORS(application, resources={r"/*": {"origins": "*"}})
@@ -63,28 +59,11 @@ def crossdomain(origin=None, methods=None, headers=None,
         return update_wrapper(wrapped_function, f)
     return decorator
 
-########################
-# INITIALIZE DATE MODEL
-########################
-#Tweets
-tweets = []
-
-data = json.load(open('twitter.json'))
-
-for tweet in data['tweets']:
-    newTweet = Tweet(tweet["status"],tweet["loc_string"],tweet["updated"],tweet["screen_name"],tweet["post_title"],tweet["Unix_time"],tweet["n_id"],tweet["ap_id"],tweet["thing"],tweet["score"],tweet["link"],tweet["published"],tweet["lat"],tweet["time_stamp"],tweet["content_hash"],tweet["location_prob"],tweet["lng"],tweet["tags"],tweet["screen_id"])
-    tweets.append(newTweet)
-
-
-# print the model as json
-def dump_model(aModel):
-    result = "{ \"tweets\": "
-    result=result + json.dumps(aModel, cls=MyEncoder)  + "}"
-    return result
-
 #  Add models, contained in classes, here...
-testProvoiceModel = TestProvoice()
 basicProvoiceModel = BasicProvoice()
+basicKeywordLookupProvoiceModel = BasicKeywordLookupProvoice()
+oregonDudeProvoiceModel = OregonDudeProvoice()
+testProvoiceModel = TestProvoice()
 
 application = Flask(__name__)
  
@@ -94,59 +73,6 @@ application = Flask(__name__)
 
 # EB looks for an 'application' callable by default.
 application = Flask(__name__)
-
-@application.route('/get_tweets', methods=['GET', 'OPTIONS'])
-@crossdomain(origin='*', headers=['Content-Type','Authorization'])
-def get_tweets():
-
-    screen_name = request.args.get('screen_name', default = '*', type = str)
-    timestamp_start = request.args.get('startDate', default = '*', type = str)
-    timestamp_end = request.args.get('endDate', default = '*', type = str)
-    sentiment_score = request.args.get('sentiment', default = '*', type = str)
-    search_terms = request.args.get('search', default = '*', type = str)
-
-    if(len(timestamp_start)>5):
-        timestamp_start = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(float(timestamp_start)/1000))
-        timestamp_end = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(float(timestamp_end)/1000))
-    print("startDate:{0}".format(timestamp_start))
-
-    returnModel = tweets
-
-    #################
-    #Apply filters
-    #################
-
-    # Screenname
-    if screen_name != "*":
-        returnModel = [x for x in returnModel if x['screen_name'] == screen_name]
-
-    # Sentiment Score
-    if sentiment_score != "*":
-        returnModel = [x for x in returnModel if x['score'] == sentiment_score]
-
-    # Search Terms
-    if search_terms != "*":
-        print search_terms
-        search_termsList = search_terms.split(" ")
-        print search_termsList
-        for term in search_termsList:
-            returnModel = [x for x in returnModel if term.lower() in x['thing'].lower()]
-
-    # DTG
-    if timestamp_start != "*":
-        st=dateparser.parse(timestamp_start)
-        et=dateparser.parse("1/1/2050")
-        if timestamp_end != "*":
-            et=dateparser.parse(timestamp_end)
-        returnModel = [x for x in returnModel if ((dateparser.parse(x['time_stamp']) >= st) & (dateparser.parse(x['time_stamp']) <= et)) ]
-
-
-    response = dump_model(returnModel)
-    return response
-
-
-# add a rule for the index page.
-application.add_url_rule('/', 'index', (lambda: dump_model()))
 
 
 #
@@ -167,6 +93,10 @@ def get_provoice():
         result = basicProvoiceModel.get_provoice_response(input)
     elif model == "test_provoice":
         result = testProvoiceModel.get_provoice_response(input)
+    elif model == "oregon_dude_provoice":
+        result = oregonDudeProvoiceModel.get_oregon_response(input)
+    elif model == "basic_keyword_lookup_provoice":
+        result = basicKeywordLookupProvoiceModel.get_provoice_response(input)
     else:
         result['response'] = "ERROR.  Your desired model {} is not implemented".format(model)
     result['input'] = input
@@ -177,7 +107,7 @@ def get_provoice():
 #
 @application.route('/', methods=['GET', 'OPTIONS'])
 def home():
-    return "<h1>Welcome to the Provoice API</h1>"
+    return render_template('index.html')
 
 #
 #  Given an input, returns a provoice response
