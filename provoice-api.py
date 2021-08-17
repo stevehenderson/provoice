@@ -6,8 +6,10 @@ from flask_cors import CORS
 import json
 from models.BasicProvoice import BasicProvoice
 from models.BasicKeywordLookupProvoice import BasicKeywordLookupProvoice
+from models.DictionaryModel import DictionaryModel
 from models.TestProvoice import TestProvoice
 from models.OregonDudeProvoice import OregonDudeProvoice
+
 
 
 application = Flask(__name__)
@@ -64,6 +66,7 @@ basicProvoiceModel = BasicProvoice()
 basicKeywordLookupProvoiceModel = BasicKeywordLookupProvoice()
 oregonDudeProvoiceModel = OregonDudeProvoice()
 testProvoiceModel = TestProvoice()
+dictionaryModel = DictionaryModel()
 
 application = Flask(__name__)
  
@@ -97,6 +100,8 @@ def get_provoice():
         result = oregonDudeProvoiceModel.get_oregon_response(input)
     elif model == "basic_keyword_lookup_provoice":
         result = basicKeywordLookupProvoiceModel.get_provoice_response(input)
+    elif model == "dictionary_model":
+        result = dictionaryModel.get_provoice_response(input)
     else:
         result['response'] = "ERROR.  Your desired model {} is not implemented".format(model)
     result['input'] = input
