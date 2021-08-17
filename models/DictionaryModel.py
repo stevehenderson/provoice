@@ -29,14 +29,15 @@ class DictionaryModel():
                 for line in f:             
                     if len(line) > 1:
                         next_dict = self.process_line(line)
-                        next_word = next_dict["word"]
-                        if next_word in self.corpus:
-                            self.corpus[next_word].append(next_dict)
-                        else:
-                            self.corpus[next_word] = [next_dict]
-                        count=count+1
-                        if count % 250 ==0:
-                            print("Loaded {} lines from {}".format(filename,count))
+                        if next_dict is not None:
+                            next_word = next_dict["word"]
+                            if next_word in self.corpus:
+                                self.corpus[next_word].append(next_dict)
+                            else:
+                                self.corpus[next_word] = [next_dict]
+                            count=count+1
+                            if count % 250 ==0:
+                                print("Loaded {} lines from {}".format(filename,count))
         
         
         with open(os.path.join(dictionary_folder_path, 'formatted_dictionary.json'), 'w') as f2:                
@@ -60,18 +61,23 @@ class DictionaryModel():
         if line[0] == "\"":
             line=line[1:len(line)-2]
 
-        #Split line on close parens
-        line_parts = line.split(")")    
-        word = line_parts[0].split("(")[0].strip().lower()
-        pos = line_parts[0].split("(")[1].strip().lower()
-        definition = ")".join(line_parts[1:]).strip().lower()
+        try:
+            #Split line on close parens
+            line_parts = line.split(")")    
+            word = line_parts[0].split("(")[0].strip().lower()
+            pos = line_parts[0].split("(")[1].strip().lower()
+            definition = ")".join(line_parts[1:]).strip().lower()
 
-        result = {}
-        result["word"] = word
-        result["pos"] = pos
-        result["definition"] = definition
-        print(result)
-        return result
+            result = {}
+            result["word"] = word
+            result["pos"] = pos
+            result["definition"] = definition
+            print(result)
+            return result
+        except Exception as e:
+            print("ERROR processing {}".format(line))
+            return None
+        
 
         return True
         #print(line)
@@ -105,11 +111,17 @@ class DictionaryModel():
         for w in all_words:
             #print("checking word: {}".format(w))
             wlower = w.lower()
-            if wlower in self.corpus:
+
+            #Only pick longer words
+            if len(wlower) > 4 and wlower in self.corpus:
                 word_dicts = self.corpus[wlower]
+
+                #If a word has multiple definitions -- pick randomly
+                #TODO:  Could use another strategy here, such as a richer text, or college reading level
                 pick = randrange(len(word_dicts))
+                word_to_add = word_dicts[pick]["word"]
                 def_to_add = word_dicts[pick]["definition"]
-                responses.append(def_to_add)
+                responses.append("({}): {}".format(word_to_add,def_to_add))
         
         result['response'] = responses
 
