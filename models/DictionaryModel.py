@@ -2,6 +2,8 @@
 
   A basic model that looks up multiple keywords.
 
+  Dictionary credit:  https://www.bragitoff.com/2016/03/english-dictionary-in-csv-format/
+
 '''
 import glob
 import json
