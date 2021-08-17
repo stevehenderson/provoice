@@ -63,6 +63,7 @@ class DictionaryModel():
 
         try:
             #Split line on close parens
+            ## Babble (v. i.) To talk incoherently; to utter unmeaning words.
             line_parts = line.split(")")    
             word = line_parts[0].split("(")[0].strip().lower()
             pos = line_parts[0].split("(")[1].strip().lower()
