@@ -58,7 +58,11 @@ class BasicKeywordLookupProvoice():
             #print("checking word: {}".format(w))
             wlower = w.lower()
             if wlower in self.flat_corpus:
-                responses.append(self.flat_corpus[wlower])
+                to_add = self.flat_corpus[wlower]
+                
+                #only add if its not in the responses
+                if to_add not in responses:
+                    responses.append(to_add)
         
         result['response'] = responses
 
