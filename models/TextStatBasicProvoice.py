@@ -3,6 +3,7 @@
   First model that selects important keyword from user input.
 
 '''
+
 import json
 from textstat.textstat import textstat
 
@@ -40,25 +41,16 @@ class TextStatBasicProvoice():
         #break up each word in the input
         all_words = input.split(" ")
 
-        # TODO new_word = ""
-        hi_score = 0
-
         for w in all_words:
             wlower = w.lower()
-            # print(wlower)
-            # # for word in wlower:
-            # new_word = wlower
             hi_score = 0
             wordscore = textstat.difficult_words(wlower)
-            # print("temp wordscore is {}".format(wordscore))
             if wordscore > hi_score:
-                hi_score = wordscore
-                responses.append(wlower)
+                hi_score = wordscore # TODO why does this say 'local variable is not used'?
+                highest_word = wlower
 
-            # print("hi score is {}".format(hi_score))
+        responses.append(highest_word)
 
-        result['model'] = self.toJson()
         result['response'] = responses
-
         return result
 

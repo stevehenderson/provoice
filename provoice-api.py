@@ -9,6 +9,7 @@ from models.BasicKeywordLookupProvoice import BasicKeywordLookupProvoice
 from models.DictionaryModel import DictionaryModel
 from models.TestProvoice import TestProvoice
 from models.OregonDudeProvoice import OregonDudeProvoice
+from models.TextStatBasicProvoice import TextStatBasicProvoice
 
 
 
@@ -67,6 +68,7 @@ basicKeywordLookupProvoiceModel = BasicKeywordLookupProvoice()
 oregonDudeProvoiceModel = OregonDudeProvoice()
 testProvoiceModel = TestProvoice()
 dictionaryModel = DictionaryModel()
+textStatBasicModel = TextStatBasicProvoice()
 
 application = Flask(__name__)
  
@@ -102,6 +104,8 @@ def get_provoice():
         result = basicKeywordLookupProvoiceModel.get_provoice_response(input)
     elif model == "dictionary_model":
         result = dictionaryModel.get_provoice_response(input)
+    elif model == "text_stat_basic_provoice":
+        result = textStatBasicModel.get_provoice_response(input)
     else:
         result['response'] = "ERROR.  Your desired model {} is not implemented".format(model)
     result['input'] = input
