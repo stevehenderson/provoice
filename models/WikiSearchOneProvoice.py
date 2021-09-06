@@ -12,7 +12,7 @@ from bs4 import BeautifulSoup
 import re
 
 
-class WikeSearchOneProvoice():
+class WikiSearchOneProvoice():
 
     # Constructor
     def __init__(self):
@@ -33,6 +33,7 @@ class WikeSearchOneProvoice():
         result['input'] = input
         result['model'] = self.toJson()
 
+
         responses = []
 
         #Replace any commas with spaces, so we only have one delimeter character
@@ -46,21 +47,17 @@ class WikeSearchOneProvoice():
         #break up each word in the input
         all_words = input.split(" ")
 
-        for w in all_words:
-            wlower = w.lower()
-            hi_score = 0
-            wordscore = textstat.difficult_words(wlower)
-            if wordscore > hi_score:
-                hi_score = wordscore # TODO why does this say 'local variable is not used'?
-                highest_word = wlower
+        hi_score = 0
 
-        # responses.append(highest_word)
-        #
-        # result['response'] = responses
-        # return result
+        for w in all_words:
+            new_word = w.lower()
+            wordscore = textstat.difficult_words(new_word) # TODO can play with another word evaluator
+            if wordscore >= hi_score:
+                hi_score = wordscore
+                highest_word = new_word
+        print("Highest word is {}".format(highest_word))
 
         url1 = 'https://en.wikipedia.org/w/api.php'
-
         params = dict(
             action='opensearch',
             search=highest_word,
@@ -71,11 +68,11 @@ class WikeSearchOneProvoice():
 
         resp = requests.get(url=url1, params=params)
         data = resp.json()
-        # print(data)
-        # print(type(data))
+        print(data)
+        print(type(data))
 
-        # for item in data:
-        # print(item)
+        for item in data:
+            print(item)
 
         list1 = data[1]
 
@@ -85,7 +82,7 @@ class WikeSearchOneProvoice():
         for item in list1:
             # print(item)
             item_score = textstat.coleman_liau_index(item)
-            print("item name is {}, item score is {}".format(item, item_score))
+            # print("item name is {}, item score is {}".format(item, item_score))
             if item_score > wiki_hi_score:
                 wiki_hi_score = item_score
                 winning_wiki_search = item
@@ -141,5 +138,11 @@ class WikeSearchOneProvoice():
             if wordscore_sentence > hi_score_sentence:
                 hi_score_sentence = wordscore_sentence
                 highest_word_sentence = new_word_sentence
-        print()
-        print("Have you heard of the {}...{}".format(winning_wiki_search, highest_word_sentence))
+        # responses.append(highest_word)
+        #
+        result['response'] = ("Have you heard of the {}...{}".format(winning_wiki_search, highest_word_sentence))
+        return result
+
+
+        # print()
+        # print("Have you heard of the {}...{}".format(winning_wiki_search, highest_word_sentence))

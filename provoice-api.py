@@ -10,8 +10,7 @@ from models.DictionaryModel import DictionaryModel
 from models.TestProvoice import TestProvoice
 from models.OregonDudeProvoice import OregonDudeProvoice
 from models.TextStatBasicProvoice import TextStatBasicProvoice
-
-
+from models.WikiSearchOneProvoice import WikiSearchOneProvoice
 
 application = Flask(__name__)
 CORS(application, resources={r"/*": {"origins": "*"}})
@@ -69,6 +68,7 @@ oregonDudeProvoiceModel = OregonDudeProvoice()
 testProvoiceModel = TestProvoice()
 dictionaryModel = DictionaryModel()
 textStatBasicModel = TextStatBasicProvoice()
+wikiSearchOneProvoiceModel = WikiSearchOneProvoice()
 
 application = Flask(__name__)
  
@@ -106,6 +106,8 @@ def get_provoice():
         result = dictionaryModel.get_provoice_response(input)
     elif model == "text_stat_basic_provoice":
         result = textStatBasicModel.get_provoice_response(input)
+    elif model == "wiki_search_one_provoice":
+        result = wikiSearchOneProvoiceModel.get_provoice_response(input)
     else:
         result['response'] = "ERROR.  Your desired model {} is not implemented".format(model)
     result['input'] = input
