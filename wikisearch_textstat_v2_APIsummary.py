@@ -117,14 +117,11 @@ for sentence in para_list:
         hi_score_sentence = wordscore_sentence
         highest_word_sentence = new_word_sentence
 print()
-print("Have you heard of the {}...{}".format(winning_wiki_search, highest_word_sentence))
 
 
+r = requests.get("https://en.wikipedia.org/api/rest_v1/page/summary/{}".format(winning_wiki_search))
+page = r.json()
+# print(page)
 
-
-# # testing -------
-# for s in soup.find_all(text=True):
-#     # Check out the parent name
-#     print(f'Parent name: {s.parent.name}')
-#     # Check the text
-#     print(s)
+# print(page["extract"]) # Returns summary of page
+print("Have you heard of the {}...{}".format(winning_wiki_search, page["extract"]))
