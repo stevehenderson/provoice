@@ -4,7 +4,7 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import re
 
-test_data = ("this is a sentence with difficult words like Geometric")
+test_data = ("this is a sentence with difficult words like GeometrIC")
 
 test_data2 = test_data.split(" ")
 
@@ -65,10 +65,21 @@ winning_url = list3[wiki_search_index]
 
 print("Heading to get {}".format(winning_url))
 
-resp2 = requests.get("https://en.wikipedia.org/api/{}".format(winning_wiki_search))
-# resp2 = requests.get("https://en.wikipedia.org/api/Geometrical%20frustration")
-print(resp2)
-print(resp2.text)
+
+response = requests.get(
+    'https://en.wikipedia.org/w/api.php',
+    params={
+        'action': 'query',
+        'format': 'json',
+        'titles': (winning_wiki_search),
+        'prop': 'extracts',
+        'exintro': True,
+        'explaintext': True,
+    }).json()
+# print(response['query']['pages'].values())
+page = next(iter(response['query']['pages'].values()))
+sent = (page['extract'])
+sent_list = sent.split(sep=".")
 
 # source = urlopen(resp2).read()
 
@@ -104,20 +115,21 @@ print(resp2.text)
 #
 # # Replace '\n' (a new line) with '' and end the string at $1000.
 # text = text.replace('\n', '')[:-11]
-# para_list = text.split(".")
-#
-# highest_word_sentence = []
-# new_word_sentence = ""
-# hi_score_sentence = 0
-#
-# for sentence in para_list:
-#     # print(sentence)
-#     new_word_sentence = sentence.lower()
-#     wordscore_sentence = textstat.difficult_words(sentence)
-#     if wordscore_sentence > hi_score_sentence:
-#         hi_score_sentence = wordscore_sentence
-#         highest_word_sentence = new_word_sentence
-# print()
+
+# sent_list = sent
+
+highest_word_sentence = []
+new_word_sentence = ""
+hi_score_sentence = 0
+
+for sentence in sent_list:
+    # print(sentence)
+    new_word_sentence = sentence.lower()
+    wordscore_sentence = textstat.difficult_words(sentence)
+    if wordscore_sentence > hi_score_sentence:
+        hi_score_sentence = wordscore_sentence
+        highest_word_sentence = new_word_sentence
+print()
 
 #
 # r = requests.get("https://en.wikipedia.org/api/rest_v1/page/summary/{}".format(winning_wiki_search))
@@ -125,4 +137,6 @@ print(resp2.text)
 # # print(page)
 #
 # # print(page["extract"]) # Returns summary of page
-# print("Have you heard of the {}...{}".format(winning_wiki_search, page["extract"]))
+
+print("Have you heard of the {}...{}".format(winning_wiki_search, highest_word_sentence))
+
