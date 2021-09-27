@@ -11,7 +11,6 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import re
 
-
 class WikiSearchTwoProvoice():
 
     # Constructor
@@ -36,22 +35,36 @@ class WikiSearchTwoProvoice():
 
         responses = []
 
-        #Replace any commas with spaces, so we only have one delimeter character
+        # Replace any commas with spaces, so we only have one delimeter character
         input = input.replace(",", " ")
 
-        #Replace any other punctuation  (TODO: There are better ways to do this..)
+        # Replace any other punctuation  (TODO: There are better ways to do this..)
         input = input.replace("?", " ")
         input = input.replace(".", " ")
 
 
-        #break up each word in the input
+        # break up each word in the input
         all_words = input.split(" ")
+
+        # list of all stop words from text file
+        # list of words in sentence without stop words
+        stopwords = []
+        sentencels_no_stopwords = []
+
+        with open('data/stop_words.txt', 'r') as stoptext:
+            for word in stoptext:
+                word = word.split('\n')
+                stopwords.append(word[0])
+
+        sentencels_no_stopwords = [w for w in all_words if w not in stopwords]
+        print(sentencels_no_stopwords) #TODO remove when done testing
 
         hi_score = 0
 
-        for w in all_words:
+        for w in sentencels_no_stopwords:
             new_word = w.lower()
-            wordscore = textstat.difficult_words(new_word) # TODO can play with another word evaluator
+            wordscore = textstat.flesch_kincaid_grade(new_word) # TODO can play with another word evaluator
+            print("word name is {}, word score is {}".format(w, wordscore))
             if wordscore >= hi_score:
                 hi_score = wordscore
                 highest_word = new_word
@@ -63,7 +76,7 @@ class WikiSearchTwoProvoice():
             search=highest_word,
             limit='20',
             namespace='0',
-            format = 'json'
+            format='json'
         )
 
         resp = requests.get(url=url1, params=params)
@@ -122,7 +135,7 @@ class WikiSearchTwoProvoice():
                 hi_score_sentence = wordscore_sentence
                 highest_word_sentence = new_word_sentence
 
-        if hi_score_sentence >= 1:
+        if hi_score >= 1:
             result['response'] = ("Have you heard of the {}...{}".format(winning_wiki_search, highest_word_sentence))
         else:
             result['response'] = ("Try reading the dictionary bro")
