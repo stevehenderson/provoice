@@ -1,11 +1,14 @@
 import requests
 
-#url = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=oregon&limit=20&namespace=0&format=json'
+
+#http://en.wikipedia.org//w/api.php?action=query&format=json&prop=revisions&titles=Cat&formatversion=2&rvprop=content&rvslots=*
+
+#url = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=oregon&limit=20&namespace=0&format=json&prop=revisions&titles=Cat&formatversion=2&rvprop=content&rvslots=*'
 url = 'https://en.wikipedia.org/w/api.php'
 
 params = dict(
     action='opensearch',
-    search='oregon',
+    search='heading to oregon',
     limit='20',
     namespace='0',
     format = 'json'
@@ -13,7 +16,9 @@ params = dict(
 
 resp = requests.get(url=url, params=params)
 data = resp.json() 
-#print(data)
+print(data)
+
+
 #print(type(data))
 
 #for item in data:
