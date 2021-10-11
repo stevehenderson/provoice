@@ -60,8 +60,8 @@ class WikiSearchTwoProvoice():
         sentencels_no_stopwords = [w for w in all_words if w not in stopwords]
         print(sentencels_no_stopwords) #TODO remove when done testing
 
-        hi_score = 0
-
+        hi_score = -50
+        highest_word = ""
 
         for w in sentencels_no_stopwords:
             new_word = w.lower()
@@ -92,7 +92,7 @@ class WikiSearchTwoProvoice():
 
         list1 = data[1]
 
-        wiki_hi_score = 0
+        wiki_hi_score = -100
         i = 0
         wiki_search_index = None
         for item in list1:
@@ -105,26 +105,52 @@ class WikiSearchTwoProvoice():
                 wiki_search_index = i
             i = i + 1
         print("Winning wiki search term is {}".format(winning_wiki_search))
-
-        list3 = data[3]
-        winning_url = list3[wiki_search_index]
-
-        print("Heading to get {}".format(winning_url))
-
-        resp2 = requests.get(
-            'https://en.wikipedia.org/w/api.php',
-            params={
-                'action': 'query',
-                'format': 'json',
-                'titles': (winning_wiki_search),
-                'prop': 'extracts',
-                'exintro': True,
-                'explaintext': True,
-            }).json()
-        # print(response['query']['pages'].values())
-        page = next(iter(resp2['query']['pages'].values()))
+        url2 = 'https://en.wikipedia.org/w/api.php'
+        #resp2 = requests.get(
+        #'https://en.wikipedia.org/w/api.php',
+        PARAMS2=dict(
+            action='query',
+            format='json',
+            titles=(winning_wiki_search),
+            prop='extracts',
+            exintro=True,
+            explaintext=True,
+        )
+        resp2 = requests.get(url=url2, params=PARAMS2)
+        #print(resp2['query']['pages'].values())
+        print(resp2)
+        test1 = resp2.json()
+        print(test1)
+        page = next(iter(test1['query']['pages'].values()))
+        print(page)
         sent = (page['extract'])
+        print(sent)
         sent_list = sent.split(sep=".")
+        print(sent_list)
+        #list3 = data[3]
+        #winning_url = list3[wiki_search_index]
+
+        #print("Heading to get {}".format(winning_url))
+        ##url2 = 'https://en.wikipedia.org/w/api.php'
+        #resp2 = requests.get(
+            #'https://en.wikipedia.org/w/api.php',
+        # PARAMS2=dict(
+        #     action='query',
+        #     format='json',
+        #     titles=(winning_wiki_search),
+        #     prop='extracts',
+        #     exintro=True,
+        #     explaintext=True,
+        # )
+        # resp2 = requests.get(url=url2, params=PARAMS2)
+        # #print(resp2['query']['pages'].values())
+        # print(resp2)
+        # resp2format = resp2.json()
+        # page = next(iter(resp2format['query']['pages'].values()))
+        # print(page)
+        # sent = (page['extract'])
+        # sent_list = sent.split(sep=".")
+        # print(sent_list)
 
 
         highest_word_sentence = []
@@ -138,7 +164,7 @@ class WikiSearchTwoProvoice():
                 hi_score_sentence = wordscore_sentence
                 highest_word_sentence = new_word_sentence
 
-        if hi_score >= 1:
+        if hi_score >= -100:
             result['response'] = ("Have you heard of the {}...{}".format(winning_wiki_search, highest_word_sentence))
         else:
             result['response'] = ("No response")

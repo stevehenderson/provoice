@@ -1,7 +1,7 @@
-from Models.WikiSearchTwoProvoice import WikiSearchTwoProvoice
+from provoice_v2.Models.WikiSearchTwoProvoice import WikiSearchTwoProvoice
 from flask import request
-from Models import DictionaryModel
-from Models import Suggestion
+#from Models import DictionaryModel
+from provoice_v2.Models import Suggestion
 
 
 class SuggestionGenerator():
@@ -16,7 +16,9 @@ class SuggestionGenerator():
     def get_suggestion(self, input):
         #return {'responses': []}
         user_input = request.args.get('input', default=None, type=str)
-
+        print("user input is {}".format(user_input))
         text = self.model.get_provoice_response(user_input)
-        new_suggestion = Suggestion(text)
+        print("text is {}".format(text))
+        #return text
+        new_suggestion = text
         return new_suggestion
