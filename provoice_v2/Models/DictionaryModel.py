@@ -11,7 +11,7 @@ import os
 from random import randrange
 
 
-dictionary_folder_path = "./data/dictionary"
+dictionary_folder_path = "data/dictionary"
 
 class DictionaryModel():
 
@@ -40,7 +40,7 @@ class DictionaryModel():
                                 print("Loaded {} lines from {}".format(filename,count))
         
         
-        with open(os.path.join(dictionary_folder_path, 'formatted_dictionary.json'), 'w') as f2:                
+        with open(os.path.join(dictionary_folder_path), 'w') as f2:
             f2.write(json.dumps(self.corpus))
 
     #
