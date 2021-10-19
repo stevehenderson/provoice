@@ -15,7 +15,7 @@ class SuggestionGenerator():
 
 
     def get_suggestion(self, input):
-        responses = {}
+        suggestions_dict = {}
 
         #return {'responses': []}
         user_input = request.args.get('input', default=None, type=str)
@@ -23,8 +23,11 @@ class SuggestionGenerator():
         text = self.model.get_provoice_response(user_input)
         print("text is {}".format(text))
         text2 = self.model2.get_provoice_response(user_input)
+        print("text2 is {}".format(text2))
         #return text
-        responses['response1'] = text
-        responses['response2'] = text2
-        print("responses equal {}".format(responses))
+        suggestions_dict['response1'] = text
+        suggestions_dict['response2'] = text2
+        #print("responses equal {}".format(responses))
+        responses = suggestions_dict
         return responses
+

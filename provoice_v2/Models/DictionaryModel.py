@@ -9,9 +9,9 @@ import glob
 import json
 import os
 from random import randrange
+from data import dictionary
 
-
-dictionary_folder_path = "data/dictionary"
+dictionary_folder_path = "./data/dictionary"
 
 class DictionaryModel():
 
@@ -125,6 +125,7 @@ class DictionaryModel():
                 responses.append("({}): {}".format(word_to_add,def_to_add))
         
         result['response'] = responses
+        print(result)
 
         return result
 
