@@ -1,7 +1,7 @@
 from provoice_v2.Models.WikiSearchTwoProvoice import WikiSearchTwoProvoice
 from flask import request
 from provoice_v2.Models.DictionaryModel import DictionaryModel
-from provoice_v2.Models import Suggestion
+#from provoice_v2.Models import Suggestion
 
 
 class SuggestionGenerator():
@@ -19,15 +19,15 @@ class SuggestionGenerator():
 
         #return {'responses': []}
         user_input = request.args.get('input', default=None, type=str)
-        print("user input is {}".format(user_input))
+        #TODO print("user input is {}".format(user_input))
         text = self.model.get_provoice_response(user_input)
-        print("text is {}".format(text))
+        #TODO print("text is {}".format(text))
         text2 = self.model2.get_provoice_response(user_input)
-        print("text2 is {}".format(text2))
-        #return text
+        #TODO print("text2 is {}".format(text2))
         suggestions_dict['response1'] = text
         suggestions_dict['response2'] = text2
-        #print("responses equal {}".format(responses))
         responses = suggestions_dict
         return responses
 
+#TODO work = SuggestionGenerator()
+#TODO print(work.model2.get_provoice_response("Will this work or not too long symphony"))

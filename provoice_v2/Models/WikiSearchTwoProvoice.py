@@ -8,9 +8,8 @@ import json
 from textstat.textstat import textstat
 import requests
 from urllib.request import urlopen
-from bs4 import BeautifulSoup
 import re
-#from models.BasicProvoice import BasicProvoice
+
 
 class WikiSearchTwoProvoice():
 
@@ -58,7 +57,6 @@ class WikiSearchTwoProvoice():
                 stopwords.append(word[0])
 
         sentencels_no_stopwords = [w for w in all_words if w not in stopwords]
-        print(sentencels_no_stopwords) #TODO remove when done testing
 
         hi_score = -50
         highest_word = ""
@@ -66,11 +64,11 @@ class WikiSearchTwoProvoice():
         for w in sentencels_no_stopwords:
             new_word = w.lower()
             wordscore = textstat.coleman_liau_index(new_word) # TODO can play with another word evaluator
-            print("word name is {}, word score is {}".format(w, wordscore))
+            print("word name is {}, word score is {}".format(w, wordscore)) #TODO REMOVE
             if wordscore >= hi_score:
                 hi_score = wordscore
                 highest_word = new_word
-       # print("Highest word is {}".format(highest_word))
+        print("Highest word is {}".format(highest_word))
 
 
         url1 = 'https://en.wikipedia.org/w/api.php'
@@ -85,7 +83,6 @@ class WikiSearchTwoProvoice():
         resp = requests.get(url=url1, params=params)
         data = resp.json()
         print(data)
-        print(type(data))
 
         for item in data:
             print(item)
@@ -106,8 +103,7 @@ class WikiSearchTwoProvoice():
             i = i + 1
         print("Winning wiki search term is {}".format(winning_wiki_search))
         url2 = 'https://en.wikipedia.org/w/api.php'
-        #resp2 = requests.get(
-        #'https://en.wikipedia.org/w/api.php',
+
         PARAMS2=dict(
             action='query',
             format='json',
@@ -117,44 +113,15 @@ class WikiSearchTwoProvoice():
             explaintext=True,
         )
         resp2 = requests.get(url=url2, params=PARAMS2)
-        #print(resp2['query']['pages'].values())
-        print(resp2)
         test1 = resp2.json()
-        print(test1)
         page = next(iter(test1['query']['pages'].values()))
-        print(page)
         sent = (page['extract'])
-        print(sent)
         sent_list = sent.split(sep=".")
-        print(sent_list)
-        #list3 = data[3]
-        #winning_url = list3[wiki_search_index]
 
-        #print("Heading to get {}".format(winning_url))
-        ##url2 = 'https://en.wikipedia.org/w/api.php'
-        #resp2 = requests.get(
-            #'https://en.wikipedia.org/w/api.php',
-        # PARAMS2=dict(
-        #     action='query',
-        #     format='json',
-        #     titles=(winning_wiki_search),
-        #     prop='extracts',
-        #     exintro=True,
-        #     explaintext=True,
-        # )
-        # resp2 = requests.get(url=url2, params=PARAMS2)
-        # #print(resp2['query']['pages'].values())
-        # print(resp2)
-        # resp2format = resp2.json()
-        # page = next(iter(resp2format['query']['pages'].values()))
-        # print(page)
-        # sent = (page['extract'])
-        # sent_list = sent.split(sep=".")
-        # print(sent_list)
 
 
         highest_word_sentence = []
-        new_word_sentence = ""
+        #new_word_sentence = ""
         hi_score_sentence = 0
 
         for sentence in sent_list:

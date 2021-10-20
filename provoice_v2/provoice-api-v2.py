@@ -1,18 +1,20 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
+from flask_restful import Resource, Api
+from flask_cors import CORS
+from Resources.get_suggestions_resource import GetSuggestions
 
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
+api = Api(app)
 
 
-
-@app.route('/get_suggestions', methods=['GET'])
-def get_suggestions():
-    input = request.args.get('input', default=None, type=str)
-    if input is None:
-        return jsonify({'message': 'no input, please enter some text'})
-    else:
-        return {'responses': ["response1", "response2"]}
-
+api.add_resource(GetSuggestions, '/get_suggestions', '/')
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
+
+    #TODO consolidate data folder? Commented out line 43 and 44 in dictionary model, add college reading selection to dict?
+    #TODO figure out path for data/dict
+
+

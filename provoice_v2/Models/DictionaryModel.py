@@ -9,9 +9,9 @@ import glob
 import json
 import os
 from random import randrange
-from data import dictionary
 
-dictionary_folder_path = "./data/dictionary"
+
+dictionary_folder_path = "/Volumes/JHENDERSON/provoice_maclab_coldspring/provoice/provoice_v2/data/dictionary"
 
 class DictionaryModel():
 
@@ -37,11 +37,13 @@ class DictionaryModel():
                                 self.corpus[next_word] = [next_dict]
                             count=count+1
                             if count % 250 ==0:
-                                print("Loaded {} lines from {}".format(filename,count))
+                                pass
+                                #print("Loaded {} lines from {}".format(filename,count))
+                               #return("Loaded {} lines from {}".format(filename,count))
         
-        
-        with open(os.path.join(dictionary_folder_path), 'w') as f2:
-            f2.write(json.dumps(self.corpus))
+
+        # with open(os.path.join(dictionary_folder_path), 'w') as f2:
+        #     f2.write(json.dumps(self.corpus))
 
     #
     # Process a line from a dictionary and return a word, POS, definition
@@ -73,13 +75,11 @@ class DictionaryModel():
             result["word"] = word
             result["pos"] = pos
             result["definition"] = definition
-            print(result)
+            #print(result)
             return result
         except Exception as e:
-            print("ERROR processing {}".format(line))
+            #print("ERROR processing {}".format(line))
             return None
-        
-
         return True
         #print(line)
 
@@ -125,8 +125,7 @@ class DictionaryModel():
                 responses.append("({}): {}".format(word_to_add,def_to_add))
         
         result['response'] = responses
-        print(result)
+       # print(result)
 
         return result
-
 
