@@ -1,6 +1,6 @@
-from provoice_v2.Models.WikiSearchTwoProvoice import WikiSearchTwoProvoice
+from models.WikiSearchTwoProvoice import WikiSearchTwoProvoice
 from flask import request
-from provoice_v2.Models.DictionaryModel import DictionaryModel
+from models.DictionaryModel import DictionaryModel
 #from provoice_v2.Models import Suggestion
 
 

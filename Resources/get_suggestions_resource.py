@@ -1,7 +1,7 @@
 from flask import Flask, request
 from flask_restful import Resource
-from Models.get_suggestions_model import SuggestionGenerator
-from Models.WikiSearchTwoProvoice import WikiSearchTwoProvoice
+from models.get_suggestions_model import SuggestionGenerator
+from models.WikiSearchTwoProvoice import WikiSearchTwoProvoice
 
 class GetSuggestions(Resource):
     def __init__(self,):

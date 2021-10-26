@@ -1,7 +1,7 @@
-from flask import Flask, request
-from flask_restful import Resource, Api, reqparse
+from flask import Flask
+from flask_restful import Api
 from flask_cors import CORS
-from Resources.get_suggestions_resource import GetSuggestions
+from _attic_.provoice_v2.Resources import GetSuggestions
 
 
 
