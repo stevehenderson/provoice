@@ -11,7 +11,7 @@ import os
 from random import randrange
 
 
-dictionary_folder_path = "/Volumes/JHENDERSON/provoice_maclab_coldspring/provoice/provoice_v2/data/dictionary"
+dictionary_folder_path = "/_attic_/provoice_v2/data/dictionary"
 
 class DictionaryModel():
 
