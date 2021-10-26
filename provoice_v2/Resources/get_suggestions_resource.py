@@ -1,7 +1,10 @@
 from flask import Flask, request
 from flask_restful import Resource
+#import jwt
 from Models.get_suggestions_model import SuggestionGenerator
 from Models.WikiSearchTwoProvoice import WikiSearchTwoProvoice
+from flask_jwt import jwt_required
+
 
 class GetSuggestions(Resource):
     def __init__(self,):
