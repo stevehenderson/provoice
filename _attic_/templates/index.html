@@ -1,0 +1,32 @@
+<html>
+    <head></head>
+    <body>
+        <h1>Welcome to the Provoice API</h1>
+        <br>Examples:<br>
+        <br><a href='http://localhost:5000/get_provoice_response?input=New%20york&model=test_provoice'>http://localhost:5000/get_provoice_response?input=New%20york&model=test_provoice</a>
+        <br><a href='http://localhost:5000/get_provoice_response?input=New%20york&model=basic_provoice'>http://localhost:5000/get_provoice_response?input=New%20york&model=basic_provoice</a>
+        <br><a href='http://localhost:5000/get_provoice_response?input=Happy%20Basic&model=dictionary_model'>http://localhost:5000/get_provoice_response?input=Happy%20Basic&model=dictioanry_model</a>
+        <br><a href='http://localhost:5000/get_provoice_response?input=You%20watching%20any%20NFL?&model=basic_keyword_lookup_provoice'>http://localhost:5000/get_provoice_response?You%20watching%20any%20NFL</a>
+        <br><a href='http://localhost:5000/get_provoice_response?input=I%20like%20fishing&model=oregon_dude_provoice'>http://localhost:5000/get_provoice_response?input=I%20like%20fishing&model=oregon_dude_provoice</a>
+        <br><br>
+        <hr>
+        Or, type your own!!
+        <br><br><br>
+        <form action='/get_provoice_response' method='get'>
+            Select Model:
+            <select name="model" id="model">                
+                <option value="basic_provoice">BasicProvoice Model</option>
+                <option value="basic_keyword_lookup_provoice">BasicKeywordLookupProvoice Model</option>
+                <option value="dictionary_model">Dictionary Model</option>
+                <option value="oregon_dude_provoice">OregonDudeProvoice Model</option>
+                <option value="test_provoice">TestProvoice Model</option>
+                <option value="text_stat_basic_provoice">TextStatBasicProvoice Model</option>
+                <option value="wiki_search_one_provoice">WikiSearchOneProvoice Model</option>
+             </select>
+             <br><br>
+             Input:
+             <input type="text" id="input" size=100 name="input"><br><br>
+             <input type="submit" value="Submit">
+        </form>
+    </body>    
+</html>
