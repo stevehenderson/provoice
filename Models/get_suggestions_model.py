@@ -1,7 +1,6 @@
 from models.WikiSearchTwoProvoice import WikiSearchTwoProvoice
 from flask import request
 from models.DictionaryModel import DictionaryModel
-#from provoice_v2.Models import Suggestion
 
 
 class SuggestionGenerator():
