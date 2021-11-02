@@ -1,23 +1,18 @@
+from user import User
+
 users = [
-    {
-        'id': 1,
-        'username': 'bob',
-        'password': 'asdf'
-    }
+    User(1, 'user1', 'abcxyz'),
+    User(2, 'user2', 'abcxyz'),
 ]
 
+username_table = {u.username: u for u in users}
+userid_table = {u.id: u for u in users}
 
 def authenticate(username, password):
-    user = {u.username: u for u in users}
-    if user is not None and user.password == password: # you can delete 'is not none' because it's implied
+    user = username_table.get(username, None)
+    if user and (user.password, password):
         return user
 
-# def identity(payload): # unique to Flask-JWT
-#     user_id = {u.id: u for u in users}
-#     return user_id
-
-
-
-# set/dict comprehension
-# username_mapping = {u.username: u for u in users}
-# userid_mapping = {u.id: u for u in users}
+def identity(payload):
+    user_id = payload['identity']
+    return userid_table.get(user_id, None)
