@@ -1,9 +1,20 @@
+import json
 from user import User
 
-users = [
-    User(1, 'user1', 'abcxyz'),
-    User(2, 'user2', 'abcxyz'),
-]
+
+f = open('secrets/users.json')
+
+user_data = json.load(f)
+users = []
+print("HI")
+for u in user_data:
+    a_user = User(u['id'], u['username'], u['password'])
+    print("Added user {}".format(a_user))
+
+#users = [
+#    User(1, 'user1', 'abcxyz'),
+#    User(2, 'user2', 'abcxyz'),
+#]
 
 username_table = {u.username: u for u in users}
 userid_table = {u.id: u for u in users}
