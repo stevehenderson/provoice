@@ -82,3 +82,5 @@ venv
 .DS_Store
 
 ve-pv/
+ve-api/
+secrets/
