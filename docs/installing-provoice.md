@@ -1,19 +1,39 @@
 # Installing Provoice
 
-Install node:
+
+## Create user database
+
+Create a new `secrets` directory with a file caleld `users.json`:
 
 ```
-sudo npm i -g pm2 
+mkdir secrets
+cd secrets
+touch users.json
 ```
 
-Install pm2
+Add a json arry with your users and passwords:
+
 
 ```
-sudo npm i -g pm2 
+[
+	{
+		"id": 1,
+		"username": "lue",
+		"password": "somegoodpassword"
+	},
+	{
+		"id": 2,
+		"username": "ben",
+		"password": "AnotherGoodPassword"
+	}
+]
 ```
 
+## Install the flask service
 
-## Prepare and Activate Python Virtual Environment
+
+
+### Prepare and Activate Python Virtual Environment
 
 
 ```
@@ -40,6 +60,8 @@ Activate it:
 source ve-api/bin/activate
 ```
 
+### Install requirements into the virtual env
+
 Upgrade pip
 
 ```
@@ -51,6 +73,24 @@ Install the requirements:
 ```
 pip install -r requirements.txt
 ```
+
+
+## Install PM2 service controller
+
+We recommend using [PM2](https://pm2.keymetrics.io/) for easy backend service management.
+
+Install node:
+
+```
+sudo npm i -g pm2 
+```
+
+Install pm2
+
+```
+sudo npm i -g pm2 
+```
+
 
 ## Start the API
 
@@ -74,10 +114,10 @@ Should return:
 }
 ```
 
-## Login (curl)
+### Test Login (curl)
 
 ```
-curl -H "Content-Type: application/json" -X POST -d '{ "username": "<user>", "password": "<some-password>" }' http://localhost:5000/auth
+curl -H "Content-Type: application/json" -X POST -d '{ "username": "lue", "password": "somegoodpassword" }' http://localhost:5000/auth
 ```
 
 Should return:
