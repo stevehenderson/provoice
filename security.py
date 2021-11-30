@@ -1,8 +1,8 @@
 from user import User
 
 users = [
-    User(1, 'user1', 'abcxyz'),
-    User(2, 'user2', 'abcxyz'),
+    User(1, 'joe', 'badger-hint-uproar-trout!'),
+    User(1, 'susan', 'badger-hint-uproar-trout!'),
 ]
 
 username_table = {u.username: u for u in users}
