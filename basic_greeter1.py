@@ -87,6 +87,7 @@ while (True):
         if re.search(pattern, user_input):
             # if a keyword matches, select the corresponding key from the keywords_dict dictionary
             matched_lemma=keys #keys here is lemma word
+            print(matched_lemma)
 
 
     key='fallback' # default key is fallback response incase there is no response for this chatbot etc... not needed for provoice so much
