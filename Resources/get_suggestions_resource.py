@@ -68,8 +68,9 @@ class GetSuggestions(Resource):
 
             final_response_list = list(responses[key])
             chosen_response = random.choice(final_response_list)
-            result['response'] = (chosen_response)
+            result['greeting'] = (chosen_response)
 
-        if found_greeting_response == True:
-            return result
-        return self.suggestion_generator.get_suggestion(input)
+        #if found_greeting_response == True:
+            #return result
+        result['response'] = self.suggestion_generator.get_suggestion(input)
+        return result
