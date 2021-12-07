@@ -13,7 +13,7 @@ class GetSuggestions(Resource):
     def __init__(self,):
         self.input = input
         self.suggestion_generator = SuggestionGenerator()
-    #@jwt_required()
+    @jwt_required()
     def get(self):
         input = request.args.get('input', default=None, type=str)
         print(input)
