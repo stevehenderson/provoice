@@ -10,8 +10,8 @@ import random
 
 
 
-
-
+# TODO make basic greeter a class so you can set a 'permission to respond function?'
+#  maybe use the try command?
 
 def get_basic_greeter(input):
 
