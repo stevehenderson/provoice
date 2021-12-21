@@ -1,13 +1,15 @@
 import json
+import sqlite3 
 from user import User
 
-#Create a secrets file -- don't check into git -- see instructions
-f = open('secrets/users.json')
+conn = sqlite3.connect('database/provoice.db')
+print(conn)
+cursor = conn.execute("SELECT id, username, password from users")
 
-user_data = json.load(f)
 users = []
-for u in user_data:
-    a_user = User(u['id'], u['username'], u['password'])
+for row in cursor:
+    print(row)
+    a_user = User(row[0], row[1], row[2])
     users.append(a_user)
 
 username_table = {u.username: u for u in users}
