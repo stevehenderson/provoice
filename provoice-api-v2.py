@@ -15,7 +15,7 @@ jwt = JWT(app, authenticate, identity)
 
 
 
-api.add_resource(GetSuggestions, '/get_suggestions', '/')
+api.add_resource(GetSuggestions, '/api/get_suggestions', '/api')
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
